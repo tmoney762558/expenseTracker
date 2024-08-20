@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Expense Tracker</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="styles.css">
+    </head>
+    <body>
+        <h1>Expense Tracker</h1>
+        <div id="main-display" class="flex">
+            <h2 id="total-expense-display">Total Expenses: $0</h2>
+            <button id="add-expense-btn">Add Expense</button>
+            <h2 id="expenses-header">Expenses:</h2>
+            <div id="expenses-display">
+                Please enter an expense.
+            </div>
+        </div>
+        <div id="add-expense-form" class="hidden">
+            <label for="title-input">Title:</label>
+            <input id="title-input" type="text">
+            <label for="amount-input">Amount:</label>
+            <input id="amount-input" type="text" oninput="validateInput(this)">
+            <label for="description-input">Description:</label>
+            <textarea id="description-input"></textarea>
+            <div id="add-expense-btns">
+                <button id="confirm-expense-btn">Add Expense</button>
+                <button id="discard-changes-btn">Discard Changes</button>
+            </div>
+        </div>
+        <script src="script.js"></script>
+    </body>
+</html>
