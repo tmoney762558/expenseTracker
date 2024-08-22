@@ -10,8 +10,10 @@ const addExpenseBtn = document.getElementById("add-expense-btn");
 const discardChangesBtn = document.getElementById("discard-changes-btn");
 const confirmExpenseBtn = document.getElementById("confirm-expense-btn");
 // Value Storage
-let tasks = [];
+let tasks = JSON.parse(localStorage.getItem("data")) || [];
 let currentTask = {};
+// Load local storage
+updateExpenseDisplay();
 // Event Listeners
 addExpenseBtn.addEventListener("click", toggleForm);
 confirmExpenseBtn.addEventListener("click", addOrEditExpense);
@@ -55,6 +57,7 @@ function addOrEditExpense() {
         tasks.push(currentTask);
     }
 
+    localStorage.setItem("data", JSON.stringify(tasks));
     currentTask = {};
     updateExpenseDisplay();
     clearInput();
@@ -70,9 +73,7 @@ function deleteExpense(buttonEl) {
     tasks.splice(currentIndex, 1);
     buttonEl.parentElement.remove();
     updateExpenseDisplay();
-    if (tasks.length === 0) {
-        expensesDisplay.innerText = "Please enter an expense."
-    }
+    localStorage.setItem("data", JSON.stringify(tasks));
 }
 // Function for loading the value of the expense the user has selected to edit
 function openEditForm(buttonEl) {
@@ -96,6 +97,10 @@ function discardChanges() {
 }
 // Function for updating the HTML used to display expenses
 function updateExpenseDisplay() {
+    if (tasks.length === 0) {
+        expensesDisplay.innerText = "Please enter an expense.";
+        return;
+    }
     let totalExpenses = 0;
 
     expensesDisplay.innerHTML = "";
