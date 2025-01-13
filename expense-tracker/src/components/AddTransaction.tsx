@@ -15,40 +15,49 @@ const AddTransaction = ({ accountName }: AddTransactionTypes) => {
   const [transactionType, setTransactionType] = useState<string>("");
 
   return (
-    <div>
-      <div>
-        <form>
-          <input
-            className="bg-neutral-100"
-            ref={transactionNameInput}
-            type="text"
-            placeholder="Transaction Name"
-          ></input>
-          <input
-            className="bg-neutral-100"
-            ref={transactionAmountInput}
-            type="number"
-            placeholder="Transaction Amount"
-          ></input>
-          <label>Income</label>
-          <input
-            type="radio"
-            name="transactionType"
-            value="income"
-            onClick={() => {
-              setTransactionType("income");
-            }}
-          ></input>
-          <label>Expense</label>
-          <input
-            type="radio"
-            name="transactionType"
-            value="expense"
-            onClick={() => {
-              setTransactionType("expense");
-            }}
-          ></input>
+        <form className="flex flex-col items-center w-full mt-10 mb-5">
+          <div className="flex flex-col items-center gap-5 w-full">
+            <div className="flex justify-center gap-5 w-full">
+            <input
+              className="w-full max-w-[11.75rem] py-1 px-2 rounded-lg bg-neutral-200 border-neutral-300 border-2 outline-none"
+              ref={transactionNameInput}
+              type="text"
+              placeholder="Transaction Name"
+            ></input>
+            <input
+              className="w-full max-w-[11.75rem] py-1 px-2 rounded-lg bg-neutral-200 border-neutral-300 border-2 outline-none"
+              ref={transactionAmountInput}
+              type="number"
+              placeholder="Transaction Amount"
+            ></input>
+            </div>
+            <div className="flex gap-5">
+            <div className="flex items-center gap-2">
+              <label>Income</label>
+              <input
+                type="radio"
+                name="transactionType"
+                value="income"
+                onClick={() => {
+                  setTransactionType("income");
+                }}
+              ></input>
+            </div>
+            <div className="flex items-center gap-2">
+              <label>Expense</label>
+              <input
+                type="radio"
+                name="transactionType"
+                value="expense"
+                onClick={() => {
+                  setTransactionType("expense");
+                }}
+              ></input>
+              </div>
+            </div>
+          </div>
           <button
+            className="w-full max-w-[25rem] mt-5 py-1 rounded-lg bg-purple-700 text-white"
             onClick={(e) => {
               e.preventDefault();
               if (
@@ -86,8 +95,6 @@ const AddTransaction = ({ accountName }: AddTransactionTypes) => {
             Add Transaction
           </button>
         </form>
-      </div>
-    </div>
   );
 };
 

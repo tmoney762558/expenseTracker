@@ -1,7 +1,13 @@
 export { default as Dashboard } from "./Dashboard";
+export { default as SideNav } from "./SideNav";
 export { default as AddAccount } from "./AddAccount";
 export { default as AddTransaction } from "./AddTransaction";
 export { default as AddBudget } from "./AddBudget";
 export { default as AddGoal } from "./AddGoal";
 export { default as ModifyBudget } from "./ModifyBudget";
 export { default as ModifyGoal } from "./ModifyGoal";
+export { default as AccountPage } from "./AccountPage";
+export { default as TransactionPage } from "./TransactionPage";
+export { default as GoalsPage } from "./GoalsPage";
+export { default as BudgetPage } from "./BudgetPage";
+export { default as DropdownMenu } from "./DropdownMenu";
