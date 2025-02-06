@@ -1,14 +1,259 @@
-import { SideNav } from "./";
+import { RootState } from "../store";
+import { SideNav, CircleProgress, BarGraph } from "./";
+import { useSelector } from "react-redux";
+import {
+  FaArrowCircleUp,
+  FaArrowCircleDown,
+  FaArrowUp,
+  FaArrowDown,
+} from "react-icons/fa";
+import { useState } from "react";
+
+interface Transaction {
+  id: number;
+  name: string;
+  amount: number;
+  accountType: string;
+  transactionType: string;
+  transactionDate: string;
+}
+
+interface Account {
+  accountType: string;
+  name: string;
+  initialBalance: number;
+  balance: number;
+  transactions: Transaction[];
+}
 
 const Dashboard = () => {
-  // const budgets = useSelector((state: RootState) => state.budgets.budgets);
-  // const goals = useSelector((state: RootState) => state.goals.goals);
+  const accounts = useSelector((state: RootState) => state.accounts.accounts);
+  const goals = useSelector((state: RootState) => state.goals.goals);
+  const budgets = useSelector((state: RootState) => state.budgets.budgets);
+  const recentTransactions = useSelector(
+    (state: RootState) => state.recentTransactions.recentTransactions
+  );
+
+  const [currentAccount, setCurrentAccount] = useState<Account>(accounts[0]);
 
   return (
-    <div className="flex relative w-full h-screen bg-slate-100">
+    <div className="flex w-full h-full min-h-screen bg-slate-100">
       <SideNav></SideNav>
-      <div className="px-10 py-5">
-
+      <div className="flex flex-col justify-center items-center w-full">
+        <div className="flex flex-col items-center w-full max-w-[100rem] px-10 py-5">
+          <div className="grid grid-rows-4 grid-cols-4 gap-3 w-full">
+            <div className="grid row-span-1 grid-rows-1 grid-cols-4 col-span-4 gap-3 w-full min-h-[15rem]">
+              {accounts.map((account, index) =>
+                index < 4 ? (
+                  <div
+                    key={index}
+                    className="row-span-1 col-span-1 p-5 rounded-lg bg-white border-2 border-neutral-300 shadow-md"
+                  >
+                    <h3 className="text-3xl font-bold text-blue-900 text-elipse">
+                      ${account.balance}
+                    </h3>
+                    <h3 className="text-lg font-semibold text-blue-800 text-elipse">
+                      {account.accountType.toUpperCase()}: {account.name}
+                    </h3>
+                    <div className="flex gap-2 items-center mt-32">
+                      <p text-elipse>
+                        Last Transaction:{" "}
+                        {account.transactions[account.transactions.length - 1]
+                          ? "$" +
+                            account.transactions[
+                              account.transactions.length - 1
+                            ].amount
+                          : "None"}
+                      </p>
+                      {account.transactions[account.transactions.length - 1] ? (
+                        account.transactions[account.transactions.length - 1]
+                          .transactionType === "income" ? (
+                          <FaArrowCircleUp
+                            fill="green"
+                            fontSize={"1.2rem"}
+                          ></FaArrowCircleUp>
+                        ) : (
+                          <FaArrowCircleDown
+                            fill="red"
+                            fontSize={"1.2rem"}
+                          ></FaArrowCircleDown>
+                        )
+                      ) : null}
+                    </div>
+                  </div>
+                ) : null
+              )}
+              {!accounts[0] ? (
+                <div className="row-span-1 col-span-1 p-5 rounded-lg bg-white border-2 border-neutral-300 shadow-md">
+                  <h3 className="text-3xl font-bold text-blue-900">$0.00</h3>
+                  <h3 className="text-lg font-semibold text-blue-800">
+                    CHECKING: 1
+                  </h3>
+                  <div className="flex gap-2 items-center mt-32">
+                    <p>Last Transaction: None</p>
+                  </div>
+                </div>
+              ) : null}
+              {!accounts[1] ? (
+                <div className="row-span-1 col-span-1 p-5 rounded-lg bg-white border-2 border-neutral-300 shadow-md">
+                  <h3 className="text-3xl font-bold text-blue-900">$0.00</h3>
+                  <h3 className="text-lg font-semibold text-blue-800">
+                    CHECKING: 2
+                  </h3>
+                  <div className="flex gap-2 items-center mt-32">
+                    <p>Last Transaction: None</p>
+                  </div>
+                </div>
+              ) : null}
+              {!accounts[2] ? (
+                <div className="row-span-1 col-span-1 p-5 rounded-lg bg-white border-2 border-neutral-300 shadow-md">
+                  <h3 className="text-3xl font-bold text-blue-900">$0.00</h3>
+                  <h3 className="text-lg font-semibold text-blue-800">
+                    CHECKING: 3
+                  </h3>
+                  <div className="flex gap-2 items-center mt-32">
+                    <p>Last Transaction: None</p>
+                  </div>
+                </div>
+              ) : null}
+              {!accounts[3] ? (
+                <div className="row-span-1 col-span-1 p-5 rounded-lg bg-white border-2 border-neutral-300 shadow-md">
+                  <h3 className="text-3xl font-bold text-blue-900">$0.00</h3>
+                  <h3 className="text-lg font-semibold text-blue-800">
+                    CHECKING: 4
+                  </h3>
+                  <div className="flex gap-2 items-center mt-32">
+                    <p>Last Transaction: None</p>
+                  </div>
+                </div>
+              ) : null}
+            </div>
+              <BarGraph accounts={accounts} currentAccount={currentAccount} setCurrentAccount={setCurrentAccount}></BarGraph>
+            <div className="flex flex-col items-center row-span-3 col-span-1 p-5 bg-white border-2 border-neutral-300 rounded-lg shadow-lg">
+              <h2 className="text-lg font-bold text-blue-900">
+                {new Date().toLocaleDateString()}
+              </h2>
+              <span className="my-4 w-full h-[3px] rounded-full bg-neutral-300"></span>
+              <div className="flex flex-col items-center w-full">
+                {recentTransactions.map((transaction, index) => (
+                  <div
+                    className="flex justify-start items-center gap-5 w-full"
+                    key={index}
+                  >
+                    <div className="p-3 rounded-lg bg-slate-200 border-[1px] border-black">
+                      {transaction.transactionType === "income" ? (
+                        <FaArrowUp fill="green" fontSize={"2rem"}></FaArrowUp>
+                      ) : (
+                        <FaArrowDown fill="red" fontSize={"2rem"}></FaArrowDown>
+                      )}
+                    </div>
+                    <div>
+                      <h3 className="max-w-[15rem] text-2xl font-bold text-blue-800 text-elipse">
+                        {transaction.name}
+                      </h3>
+                      <h4 className="max-w-[10rem] text-xl text-black text-elipse">
+                        {transaction.transactionType === "income"
+                          ? transaction.accountType !== "credit card"
+                            ? "Income: +"
+                            : "Payment: +"
+                          : "Expense: -"}
+                        ${Math.abs(transaction.amount)}
+                      </h4>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div className="flex gap-5 w-full row-span-1 col-span-3">
+              {!budgets[0] ? (
+                <div className="w-1/2 p-10 rounded-lg border-2 border-neutral-300 bg-white shadow-md">
+                  <div className="flex lg:flex-row flex-col justify-center lg:items-start items-center gap-5 mt-10">
+                    <CircleProgress percentage={0}></CircleProgress>
+                    <div>
+                      <h3 className="text-center text-xl font-bold">
+                        Budget 1
+                      </h3>
+                      <h4 className="max-w-[10rem] text-center text-lg text-blue-500 font-semibold">
+                        Budget Used: $0 / $ 0
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+              {budgets.map((budget, index) =>
+                index < 1 ? (
+                  <div
+                    className="w-1/2 p-10 rounded-lg border-2 border-neutral-300 bg-white shadow-md"
+                    key={index}
+                  >
+                    <div className="flex lg:flex-row flex-col justify-center lg:items-start items-center gap-5 mt-10">
+                      <CircleProgress
+                        percentage={budget.budgetPercentage}
+                      ></CircleProgress>
+                      <div>
+                        <h3 className="text-center text-xl font-bold">
+                          {budget.name}
+                        </h3>
+                        <h4
+                          className={`max-w-[10rem] text-center text-lg ${
+                            budget.budgetUsed >= budget.budgetTotal
+                              ? "text-red-500"
+                              : "text-blue-500"
+                          } font-semibold`}
+                        >
+                          Budget Used: ${budget.budgetUsed} / $
+                          {budget.budgetTotal}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                ) : null
+              )}
+              {!goals[0] ? (
+                <div className="w-1/2 p-10 rounded-lg border-2 border-neutral-300 bg-white shadow-md">
+                  <div className="flex lg:flex-row flex-col justify-center lg:items-start items-center gap-5 mt-10">
+                    <CircleProgress percentage={0}></CircleProgress>
+                    <div>
+                      <h3 className="text-center text-xl font-bold">Goal 1</h3>
+                      <h4 className="max-w-[10rem] text-center text-lg text-blue-500 font-semibold">
+                        Goal Progress: $0 / $ 0
+                      </h4>
+                    </div>
+                  </div>
+                </div>
+              ) : null}
+              {goals.map((goal, index) =>
+                index < 1 ? (
+                  <div
+                    className="w-1/2 p-10 border-2 border-neutral-300 rounded-lg bg-white shadow-md"
+                    key={index}
+                  >
+                    <div className="flex lg:flex-row flex-col justify-center lg:items-start items-center gap-5 mt-10">
+                      <CircleProgress
+                        percentage={goal.goalPercentage}
+                      ></CircleProgress>
+                      <div>
+                        <h3 className="text-center text-xl font-bold">
+                          {goal.name}
+                        </h3>
+                        <h4
+                          className={`max-w-[10rem] text-center text-lg ${
+                            goal.goalProgress >= goal.goalTotal
+                              ? "text-green-500"
+                              : "text-blue-500"
+                          } font-semibold`}
+                        >
+                          Goal Progress: ${goal.goalProgress} / $
+                          {goal.goalTotal}
+                        </h4>
+                      </div>
+                    </div>
+                  </div>
+                ) : null
+              )}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

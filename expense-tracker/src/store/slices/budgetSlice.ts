@@ -4,6 +4,7 @@ interface Budget {
   name: string;
   budgetUsed: number;
   budgetTotal: number;
+  budgetPercentage: number;
 }
 
 interface BudgetState {
@@ -24,6 +25,7 @@ const budgetSlice = createSlice({
         name: string;
         budgetUsed: number;
         budgetTotal: number;
+        budgetPercentage: number;
       }>
     ): void => {
       if (state.budgets.find((budget) => budget.name === action.payload.name)) {
@@ -54,6 +56,8 @@ const budgetSlice = createSlice({
       );
       if (budgetToUpdate !== undefined) {
         budgetToUpdate.budgetUsed += action.payload.amount;
+        budgetToUpdate.budgetPercentage = Math.round(budgetToUpdate.budgetUsed / budgetToUpdate.budgetTotal * 100);
+        budgetToUpdate.budgetPercentage = budgetToUpdate.budgetPercentage < 0 ? 0 : budgetToUpdate.budgetPercentage;
       }
     },
     changeBudgetLimit: (
@@ -68,6 +72,8 @@ const budgetSlice = createSlice({
       );
       if (budgetToUpdate !== undefined) {
         budgetToUpdate.budgetTotal = action.payload.amount;
+        budgetToUpdate.budgetPercentage = Math.round(budgetToUpdate.budgetUsed / budgetToUpdate.budgetTotal * 100);
+        budgetToUpdate.budgetPercentage = budgetToUpdate.budgetPercentage < 0 ? 0 : budgetToUpdate.budgetPercentage;
       }
     },
   },

@@ -4,6 +4,7 @@ interface Goal {
   name: string;
   goalProgress: number;
   goalTotal: number;
+  goalPercentage: number;
 }
 
 interface GoalState {
@@ -24,6 +25,7 @@ const goalSlice = createSlice({
         name: string;
         goalProgress: number;
         goalTotal: number;
+        goalPercentage: number;
       }>
     ): void => {
       if (state.goals.find((goal) => goal.name === action.payload.name)) {
@@ -54,6 +56,8 @@ const goalSlice = createSlice({
       );
       if (goalToUpdate !== undefined) {
         goalToUpdate.goalProgress += action.payload.amount;
+        goalToUpdate.goalPercentage = Math.round(goalToUpdate.goalProgress / goalToUpdate.goalTotal * 100);
+        goalToUpdate.goalPercentage = goalToUpdate.goalPercentage < 0 ? 0 : goalToUpdate.goalPercentage;
       }
     },
     changeGoal: (
@@ -68,6 +72,8 @@ const goalSlice = createSlice({
       );
       if (goalToUpdate !== undefined) {
         goalToUpdate.goalTotal = action.payload.amount;
+        goalToUpdate.goalPercentage = Math.round(goalToUpdate.goalProgress / goalToUpdate.goalTotal * 100);
+        goalToUpdate.goalPercentage = goalToUpdate.goalPercentage < 0 ? 0 : goalToUpdate.goalPercentage;
       }
     }
   },

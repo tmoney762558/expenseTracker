@@ -9,44 +9,49 @@ const AddGoal = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
-      <form>
+    <form className="flex flex-col items-center w-full mt-10 mb-5">
+      <div className="flex flex-col items-center gap-5 w-full">
         <input
-          className="bg-neutral-100"
+          className="w-full max-w-[25rem] py-1 px-2 bg-neutral-200 border-neutral-300 border-2 outline-none"
           ref={goalNameInput}
           type="text"
           placeholder="Goal Name"
         ></input>
         <input
-          className="bg-neutral-100"
+          className="w-full max-w-[25rem] py-1 px-2 bg-neutral-200 border-neutral-300 border-2 outline-none"
           ref={goalAmountInput}
           type="number"
           placeholder="Goal Amount"
         ></input>
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            if (goalNameInput.current && goalAmountInput.current !== null) {
-              if (goalNameInput.current.value === "" || goalAmountInput.current.value === "") {
-                alert("Please fill out all fields.");
-                return;
-              }
-              dispatch(
-                addGoal({
-                  name: goalNameInput.current.value,
-                  goalProgress: 0,
-                  goalTotal: Number(goalAmountInput.current.value),
-                })
-              );
-              goalNameInput.current.value = "";
-              goalAmountInput.current.value = "";
+      </div>
+      <button
+        className="w-full max-w-[25rem] mt-5 py-1 bg-cyan-900 text-white"
+        onClick={(e) => {
+          e.preventDefault();
+          if (goalNameInput.current && goalAmountInput.current !== null) {
+            if (
+              goalNameInput.current.value === "" ||
+              goalAmountInput.current.value === ""
+            ) {
+              alert("Please fill out all fields.");
+              return;
             }
-          }}
-        >
-          Add Goal
-        </button>
-      </form>
-    </div>
+            dispatch(
+              addGoal({
+                name: goalNameInput.current.value,
+                goalProgress: 0,
+                goalTotal: Number(goalAmountInput.current.value),
+                goalPercentage: 0,
+              })
+            );
+            goalNameInput.current.value = "";
+            goalAmountInput.current.value = "";
+          }
+        }}
+      >
+        Add Goal
+      </button>
+    </form>
   );
 };
 

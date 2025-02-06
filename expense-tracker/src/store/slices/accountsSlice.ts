@@ -4,6 +4,9 @@ interface Transaction {
   id: number;
   name: string;
   amount: number;
+  accountType: string;
+  transactionType: string;
+  transactionDate: string;
 }
 
 interface Account {
@@ -93,7 +96,10 @@ const accountsSlice = createSlice({
         accountToChange.transactions = accountToChange.transactions.filter(
           (transaction) => transaction.id !== action.payload.transactionId
         );
-        accountToChange.balance = accountToChange.transactions.reduce((acc, transaction) => acc + transaction.amount, accountToChange.initialBalance);
+        accountToChange.balance = accountToChange.transactions.reduce(
+          (acc, transaction) => acc + transaction.amount,
+          accountToChange.initialBalance
+        );
       }
     },
   },

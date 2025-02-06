@@ -11,3 +11,5 @@ export { default as TransactionPage } from "./TransactionPage";
 export { default as GoalsPage } from "./GoalsPage";
 export { default as BudgetPage } from "./BudgetPage";
 export { default as DropdownMenu } from "./DropdownMenu";
+export { default as CircleProgress } from "./CircleProgress";
+export { default as BarGraph } from "./BarGraph";

@@ -14,28 +14,36 @@ const ModifyGoal = ({ goalName }: { goalName: string }) => {
     <div>
       <form>
         <input
+          className="w-full py-3 px-3 bg-neutral-100 border-2 border-neutral-200"
           ref={goalProgressInput}
           type="number"
           placeholder="Goal Progress"
         />
-        <label>Increase</label>
-        <input
-          type="radio"
-          name="goalOperation"
-          defaultChecked
-          onClick={() => {
-            setGoalOperation("increase");
-          }}
-        />
-        <label>Decrease</label>
-        <input
-          type="radio"
-          name="goalOperation"
-          onClick={() => {
-            setGoalOperation("decrease");
-          }}
-        />
+        <div className="flex flex-wrap lg:justify-start justify-center gap-5 mt-5">
+          <div className="flex items-center gap-3">
+            <label>Increase</label>
+            <input
+              type="radio"
+              name="goalOperation"
+              defaultChecked
+              onClick={() => {
+                setGoalOperation("increase");
+              }}
+            />
+          </div>
+          <div className="flex items-cener gap-3">
+            <label>Decrease</label>
+            <input
+              type="radio"
+              name="goalOperation"
+              onClick={() => {
+                setGoalOperation("decrease");
+              }}
+            />
+          </div>
+        </div>
         <button
+          className="w-full mt-5 p-3 bg-cyan-900 text-white"
           onClick={(e) => {
             e.preventDefault();
             if (goalProgressInput.current !== null) {
@@ -55,16 +63,18 @@ const ModifyGoal = ({ goalName }: { goalName: string }) => {
           Modify Goal
         </button>
       </form>
-      <form>
+      <form className="mt-5">
         <input
+          className="w-full py-3 px-3 bg-neutral-100 border-2 border-neutral-200"
           ref={newGoalInput}
           type="number"
           placeholder="Change Goal"
         ></input>
         <button
+          className="w-full mt-5 p-3 bg-cyan-900 text-white"
           onClick={(e) => {
             e.preventDefault();
-            if (newGoalInput.current !== null) {
+            if (newGoalInput.current !== null && newGoalInput.current.value !== "") {
               dispatch(
                 changeGoal({
                   name: goalName,

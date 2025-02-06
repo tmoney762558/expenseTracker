@@ -10,22 +10,22 @@ const AddBudget = () => {
 
   return (
     <form className="flex flex-col items-center w-full mt-10 mb-5">
-      <div className="flex justify-center gap-5 w-full">
+      <div className="flex flex-col items-center gap-5 w-full">
         <input
-          className="w-full max-w-[11.75rem] py-1 px-2 rounded-lg bg-neutral-200 border-neutral-300 border-2 outline-none"
+          className="w-full max-w-[25rem] py-1 px-2 bg-neutral-200 border-neutral-300 border-2 outline-none"
           ref={budgetNameInput}
           type="text"
           placeholder="Budget Name"
         ></input>
         <input
-          className="w-full max-w-[11.75rem] py-1 px-2 rounded-lg bg-neutral-200 border-neutral-300 border-2 outline-none"
+          className="w-full max-w-[25rem] py-1 px-2 bg-neutral-200 border-neutral-300 border-2 outline-none"
           ref={budgetAmountInput}
           type="number"
           placeholder="Budget Amount"
         ></input>
       </div>
       <button
-        className="w-full max-w-[25rem] mt-5 py-1 rounded-lg bg-purple-700 text-white"
+        className="w-full max-w-[25rem] mt-5 py-1 bg-cyan-900 text-white"
         onClick={(e) => {
           e.preventDefault();
           if (
@@ -44,6 +44,7 @@ const AddBudget = () => {
                 name: budgetNameInput.current.value,
                 budgetUsed: 0,
                 budgetTotal: Number(budgetAmountInput.current.value),
+                budgetPercentage: 0,
               })
             );
             budgetNameInput.current.value = "";
@@ -51,7 +52,7 @@ const AddBudget = () => {
           }
         }}
       >
-        Add Budget
+        Create Budget
       </button>
     </form>
   );

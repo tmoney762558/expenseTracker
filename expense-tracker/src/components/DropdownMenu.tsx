@@ -12,18 +12,18 @@ const DropdownMenu = ({ dropdownItems }: { dropdownItems: DropdownItem[] }) => {
   const [open, setOpen] = useState<boolean>(false); // Controls dropdown state
 
   return (
-    <div>
+    <div className="relative">
       <CgMenuRightAlt
         className="cursor-pointer"
         onClick={() => {
           setOpen((prev) => !prev);
         }}
       ></CgMenuRightAlt>
-      <ul className={`absolute ${open ? "block" : "hidden"}`}>
+      <ul className={`absolute top-4 right-0 ${open ? "block" : "hidden"}`}>
         {dropdownItems.map((dropdownItem, index) => (
           <NavLink to={dropdownItem.link || "#"} key={index}>
             <li
-              className="cursor-pointer bg-neutral-300 hover:bg-neutral-400 px-2 py-1"
+              className="max-w-[13rem] cursor-pointer bg-neutral-300 hover:bg-neutral-400 px-2 py-1 text-nowrap"
               key={index}
               onClick={dropdownItem.onClick}
             >
