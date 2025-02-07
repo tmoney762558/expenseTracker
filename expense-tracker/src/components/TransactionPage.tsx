@@ -50,7 +50,7 @@ const TransactionPage = () => {
           {accountName}
         </h2>
         <NavLink to="/accounts">
-          <button className="absolute left-5 top-0 p-2 rounded-full bg-cyan-950 text-white">
+          <button className="absolute right-5 top-0 p-2 rounded-full bg-cyan-950 text-white">
             <IoArrowBack fontSize={"1.2rem"}></IoArrowBack>
           </button>
         </NavLink>

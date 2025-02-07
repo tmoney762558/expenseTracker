@@ -45,7 +45,7 @@ const BarGraph = ({
     return minAmount;
   };
   return (
-    <div className="flex flex-col row-span-2 col-span-3 p-5 border-2 border-neutral-300 rounded-lg bg-white">
+    <div className="lg:flex hidden flex-col row-span-2 2xl:col-span-3 col-span-2 p-5 border-2 border-neutral-300 rounded-lg bg-white">
       <div className="flex justify-between">
         <h2 className="text-xl font-bold text-blue-700">
           Transaction Trends (
@@ -129,7 +129,9 @@ const BarGraph = ({
             </div>
           ))
         ) : (
-          <p>No Transactions</p>
+          <div className="flex items-start h-full">
+            <p className="text-xl font-bold">No Transactions</p>
+          </div>
         )}
       </div>
     </div>

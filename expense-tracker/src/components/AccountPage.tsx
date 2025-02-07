@@ -10,6 +10,7 @@ interface Transaction {
   amount: number;
   accountType: string;
   transactionType: string;
+  transactionDate: string;
 }
 
 interface Account {
@@ -32,14 +33,14 @@ const AccountPage = () => {
   return (
     <div className="flex h-fit min-h-screen bg-neutral-100">
       <SideNav></SideNav>
-      <div className="flex flex-col items-center w-full mt-10 px-10 pb-10">
+      <div className="flex flex-col items-center w-full mt-10 lg:px-5 px-3 pb-10">
         <h2 className="text-2xl font-bold">Accounts</h2>
         <AddAccount></AddAccount>
-        <div className="grid xl:grid-cols-3 lg:grid-cols-2 cols-1 gap-5 mt-10">
+        <div className="grid xl:grid-cols-3 lg:grid-cols-2 cols-1 gap-5 w-full mt-10">
           {accounts.map((account, index1) => (
             <div
               key={index1}
-              className="flex flex-col w-[20rem] aspect-[2/1] p-3 rounded-lg bg-white border-neutral-300 border-2 shadow-lg"
+              className="flex flex-col w-full max-w-[20rem] aspect-[2/1] p-3 rounded-lg bg-white border-neutral-300 border-2 shadow-lg"
             >
               <div className="flex justify-between">
                 <h3>{account.accountType.toUpperCase()}</h3>{" "}

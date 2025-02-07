@@ -12,7 +12,9 @@ interface GoalState {
 }
 
 const initialState: GoalState = {
-  goals: [],
+  goals: localStorage.getItem("goals")
+    ? JSON.parse(localStorage.getItem("goals") as string)
+    : [],
 };
 
 const goalSlice = createSlice({
@@ -56,8 +58,11 @@ const goalSlice = createSlice({
       );
       if (goalToUpdate !== undefined) {
         goalToUpdate.goalProgress += action.payload.amount;
-        goalToUpdate.goalPercentage = Math.round(goalToUpdate.goalProgress / goalToUpdate.goalTotal * 100);
-        goalToUpdate.goalPercentage = goalToUpdate.goalPercentage < 0 ? 0 : goalToUpdate.goalPercentage;
+        goalToUpdate.goalPercentage = Math.round(
+          (goalToUpdate.goalProgress / goalToUpdate.goalTotal) * 100
+        );
+        goalToUpdate.goalPercentage =
+          goalToUpdate.goalPercentage < 0 ? 0 : goalToUpdate.goalPercentage;
       }
     },
     changeGoal: (
@@ -66,19 +71,23 @@ const goalSlice = createSlice({
         name: string;
         amount: number;
       }>
-    ):void => {
+    ): void => {
       const goalToUpdate = state.goals.find(
         (goal) => goal.name === action.payload.name
       );
       if (goalToUpdate !== undefined) {
         goalToUpdate.goalTotal = action.payload.amount;
-        goalToUpdate.goalPercentage = Math.round(goalToUpdate.goalProgress / goalToUpdate.goalTotal * 100);
-        goalToUpdate.goalPercentage = goalToUpdate.goalPercentage < 0 ? 0 : goalToUpdate.goalPercentage;
+        goalToUpdate.goalPercentage = Math.round(
+          (goalToUpdate.goalProgress / goalToUpdate.goalTotal) * 100
+        );
+        goalToUpdate.goalPercentage =
+          goalToUpdate.goalPercentage < 0 ? 0 : goalToUpdate.goalPercentage;
       }
-    }
+    },
   },
 });
 
-export const { addGoal, removeGoal, addGoalProgress, changeGoal } = goalSlice.actions;
+export const { addGoal, removeGoal, addGoalProgress, changeGoal } =
+  goalSlice.actions;
 
 export default goalSlice.reducer;

@@ -12,7 +12,7 @@ interface BudgetState {
 }
 
 const initialState: BudgetState = {
-  budgets: [],
+  budgets: localStorage.getItem("budgets") ? JSON.parse(localStorage.getItem("budgets") as string) : [],
 };
 
 const budgetSlice = createSlice({
@@ -33,6 +33,7 @@ const budgetSlice = createSlice({
         return;
       }
       state.budgets = [...state.budgets, action.payload];
+      localStorage.setItem("budgets", JSON.stringify(state.budgets));
     },
     removeBudget: (
       state: BudgetState,
@@ -43,6 +44,7 @@ const budgetSlice = createSlice({
       state.budgets = state.budgets.filter(
         (budget) => budget.name !== action.payload.name
       );
+      localStorage.setItem("budgets", JSON.stringify(state.budgets));
     },
     addBudgetUsed: (
       state: BudgetState,
@@ -58,6 +60,7 @@ const budgetSlice = createSlice({
         budgetToUpdate.budgetUsed += action.payload.amount;
         budgetToUpdate.budgetPercentage = Math.round(budgetToUpdate.budgetUsed / budgetToUpdate.budgetTotal * 100);
         budgetToUpdate.budgetPercentage = budgetToUpdate.budgetPercentage < 0 ? 0 : budgetToUpdate.budgetPercentage;
+        localStorage.setItem("budgets", JSON.stringify(state.budgets));
       }
     },
     changeBudgetLimit: (
@@ -74,6 +77,7 @@ const budgetSlice = createSlice({
         budgetToUpdate.budgetTotal = action.payload.amount;
         budgetToUpdate.budgetPercentage = Math.round(budgetToUpdate.budgetUsed / budgetToUpdate.budgetTotal * 100);
         budgetToUpdate.budgetPercentage = budgetToUpdate.budgetPercentage < 0 ? 0 : budgetToUpdate.budgetPercentage;
+        localStorage.setItem("budgets", JSON.stringify(state.budgets));
       }
     },
   },

@@ -1,7 +1,6 @@
-const CircleProgress = ({percentage}: {percentage: number}) => {
-
+const CircleProgress = ({ percentage }: { percentage: number }) => {
   return (
-    <div className="w-fit">
+    <div className="w-fit z-0">
       <div className="w-[160px] aspect-square relative">
         <svg
           className="absolute top-0 left-0"
@@ -17,12 +16,16 @@ const CircleProgress = ({percentage}: {percentage: number}) => {
             </linearGradient>
           </defs>
           <circle
-          className="progress-animation"
+            className="progress-animation"
             fill="none"
             stroke="blue"
             strokeWidth={"20px"}
             strokeDasharray={450}
-            strokeDashoffset={450 - ((percentage * 0.01) * 450) < 0 ? 0 : 450 - ((percentage * 0.01) * 450)}
+            strokeDashoffset={
+              450 - percentage * 0.01 * 450 < 0
+                ? 0
+                : 450 - percentage * 0.01 * 450
+            }
             cx="80"
             cy="80"
             r="70"

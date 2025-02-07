@@ -14,7 +14,9 @@ interface RecentTransactionsState {
 }
 
 const initialState: RecentTransactionsState = {
-  recentTransactions: [],
+  recentTransactions: localStorage.getItem("recentTransactions")
+    ? JSON.parse(localStorage.gettem("recentTransactions") as string)
+    : [],
 };
 
 const recentTransactionsSlice = createSlice({
@@ -31,6 +33,10 @@ const recentTransactionsSlice = createSlice({
       state.recentTransactions.unshift(action.payload.transaction);
       if (state.recentTransactions.length > 5) {
         state.recentTransactions.pop();
+        localStorage.setItem(
+          "recentTransactions",
+          JSON.stringify(state.recentTransactions)
+        );
       }
     },
     removeFromRecents: (
@@ -42,6 +48,10 @@ const recentTransactionsSlice = createSlice({
     ) => {
       state.recentTransactions = state.recentTransactions.filter(
         (transaction) => transaction.id !== action.payload.transactionId
+      );
+      localStorage.setItem(
+        "recentTransactions",
+        JSON.stringify(state.recentTransactions)
       );
     },
   },

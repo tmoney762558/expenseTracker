@@ -22,7 +22,7 @@ interface AccountsState {
 }
 
 const initialState: AccountsState = {
-  accounts: [],
+  accounts: localStorage.getItem("accounts") ? JSON.parse(localStorage.getItem("accounts") as string) : [],
 };
 
 const accountsSlice = createSlice({
@@ -48,6 +48,7 @@ const accountsSlice = createSlice({
         return;
       }
       state.accounts = [...state.accounts, action.payload];
+      localStorage.setItem("accounts", JSON.stringify(state.accounts));
     },
     removeAccount: (
       // Remove Accounts
@@ -61,6 +62,7 @@ const accountsSlice = createSlice({
       state.accounts = state.accounts.filter(
         (account) => account.name !== action.payload.name
       );
+      localStorage.setItem("accounts", JSON.stringify(state.accounts));
     },
     addTransaction: (
       // Add Transactions
@@ -79,6 +81,7 @@ const accountsSlice = createSlice({
           action.payload.transaction,
         ];
         accountToChange.balance += action.payload.transaction.amount;
+        localStorage.setItem("accounts", JSON.stringify(state.accounts));
       }
     },
     removeTransaction: (
@@ -100,6 +103,7 @@ const accountsSlice = createSlice({
           (acc, transaction) => acc + transaction.amount,
           accountToChange.initialBalance
         );
+        localStorage.setItem("accounts", JSON.stringify(state.accounts));
       }
     },
   },
